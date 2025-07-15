@@ -1,11 +1,12 @@
 import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import get_object_or_404 
 from generos.models import Genero
 
 
 @csrf_exempt
-def genero_view(request):
+def criar_listar_generos_view(request):
     if request.method == 'GET':
         generos = Genero.objects.all()
         dados = [{'id': genero.id, 'nome': genero.nome} for genero in generos]
@@ -16,3 +17,22 @@ def genero_view(request):
         novo_genero = Genero(nome=dados['nome'])
         novo_genero.save()
         return JsonResponse({'id': novo_genero.id, 'nome': novo_genero.nome},status=201,)
+    
+
+@csrf_exempt
+def detalhe_genero_view(request, pk):
+    genero = get_object_or_404(Genero, pk=pk)
+
+    if request.method == 'GET':
+        dado = {'id': genero.id, 'nome': genero.nome}
+        return JsonResponse(dado)
+
+    elif request.method == 'PUT':
+        dado = json.loads(request.body.decode('utf-8'))
+        genero.nome = dado['nome']
+        genero.save()
+        return JsonResponse({'id': genero.id, 'nome': genero.nome},status=200,)
+    
+    elif request.method == 'DELETE':
+        genero.delete()
+        return JsonResponse({'message': 'Genero Excluido com sucesso.'}, status=204,)
