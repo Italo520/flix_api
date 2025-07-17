@@ -1,9 +1,5 @@
-import json
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import get_object_or_404 
-from generos.models import Genero
 from rest_framework import generics
+from generos.models import Genero
 from generos.serializers import GeneroSerializer
 
 
@@ -14,6 +10,21 @@ class GeneroListaCriarAPIView(generics.ListCreateAPIView):
     serializer_class = GeneroSerializer
 
 
+class GeneroRetrieveUpdateDestroiAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Genero.objects.all()
+    serializer_class = GeneroSerializer
+
+
+
+
+
+
+
+#Codigo antigo usando JsonResponse e csrf_exempt
+# import json
+# from django.http import JsonResponse
+# from django.views.decorators.csrf import csrf_exempt
+# from django.shortcuts import get_object_or_404 
 
 # @csrf_exempt
 # def criar_listar_generos_view(request):
@@ -29,20 +40,20 @@ class GeneroListaCriarAPIView(generics.ListCreateAPIView):
 #         return JsonResponse({'id': novo_genero.id, 'nome': novo_genero.nome},status=201,)
     
 
-@csrf_exempt
-def detalhe_genero_view(request, pk):
-    genero = get_object_or_404(Genero, pk=pk)
+# @csrf_exempt
+# def detalhe_genero_view(request, pk):
+#     genero = get_object_or_404(Genero, pk=pk)
 
-    if request.method == 'GET':
-        dado = {'id': genero.id, 'nome': genero.nome}
-        return JsonResponse(dado)
+#     if request.method == 'GET':
+#         dado = {'id': genero.id, 'nome': genero.nome}
+#         return JsonResponse(dado)
 
-    elif request.method == 'PUT':
-        dado = json.loads(request.body.decode('utf-8'))
-        genero.nome = dado['nome']
-        genero.save()
-        return JsonResponse({'id': genero.id, 'nome': genero.nome},status=200,)
+#     elif request.method == 'PUT':
+#         dado = json.loads(request.body.decode('utf-8'))
+#         genero.nome = dado['nome']
+#         genero.save()
+#         return JsonResponse({'id': genero.id, 'nome': genero.nome},status=200,)
     
-    elif request.method == 'DELETE':
-        genero.delete()
-        return JsonResponse({'message': 'Genero Excluido com sucesso.'}, status=204,)
+#     elif request.method == 'DELETE':
+#         genero.delete()
+#         return JsonResponse({'message': 'Genero Excluido com sucesso.'}, status=204,)
