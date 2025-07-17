@@ -1,0 +1,45 @@
+# Ignorar pastas de ambiente virtual
+venv/
+.venv/
+env/
+.env/
+
+# Ignorar arquivos de cache do Python
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+.Python
+build/
+dist/
+egg-info/
+.eggs/
+
+# Ignorar arquivos de cache e banco de dados do Django
+*.sqlite3
+db.sqlite3
+*.log
+*.pot
+
+# Ignorar arquivos de mídia e estáticos (se estiverem sendo gerados localmente e não devem ser versionados)
+/media
+/static_root
+
+# Ignorar arquivos de configuração local sensíveis (muito importante!)
+# Normalmente, você deve ter um arquivo como .env para variáveis de ambiente
+# ou um settings_local.py
+.env
+.flaskenv
+instance/ # Para Flask
+settings_local.py # Exemplo de arquivo de settings local
+*.ini # Arquivos de configuração genéricos
+
+# Ignorar arquivos do VS Code
+.vscode/
+
+# Ignorar arquivos de sistema (macOS)
+.DS_Store
+
+# Ignorar arquivos temporários de editor
+*~
+*.swp
