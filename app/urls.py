@@ -7,6 +7,8 @@ urlpatterns = [
     
     path('admin/', admin.site.urls),
 
+    path('api/v1/', include('autenticacao.urls')),
+
     path('api/v1/', include('generos.urls')),
 
     path('api/v1/', include('filmes.urls')),
@@ -15,4 +17,5 @@ urlpatterns = [
 
     path('api/v1/', include('reviews.urls')),
 
+    
 ]
