@@ -2,18 +2,19 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from generos.models import Genero
 from generos.serializers import GeneroSerializer
+from generos.permissions import GeneroPermissionClass
 
 
 
 
 class GeneroListaCriarAPIView(generics.ListCreateAPIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,GeneroPermissionClass,)
     queryset = Genero.objects.all()
     serializer_class = GeneroSerializer
 
 
 class GeneroRetrieveUpdateDestroiAPIView(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,GeneroPermissionClass,)
     queryset = Genero.objects.all()
     serializer_class = GeneroSerializer
 
