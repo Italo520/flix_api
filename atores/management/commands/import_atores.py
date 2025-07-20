@@ -1,9 +1,14 @@
 import csv
 from datetime import datetime
 from django.core.management.base import BaseCommand
-from atores.models import Atores
+from atores.models import Atores, CONST_NACIONALIDADE # Importe CONST_NACIONALIDADE também
 
 class Command(BaseCommand):
+    help = 'Importa dados de atores de um arquivo CSV.'
+
+    # Mapeamento do nome completo da nacionalidade para o código de duas letras
+    # Isso é necessário porque o CSV tem o nome completo, mas o modelo espera o código.
+    NACIONALIDADE_MAP = {value: key for key, value in CONST_NACIONALIDADE}
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -19,18 +24,35 @@ class Command(BaseCommand):
                 reader = csv.DictReader(file)
                 for row in reader:
                     nome = row['nome']
-                    data_nascimento = datetime.strptime(row['data_nascimento'], '%Y-%m-%d').date() if row['data_nascimento'] else None
-                    nascionalidade = row['nascionalidade'] if row['nascionalidade'] else None
+                    
+                    # Converte a data de nascimento, se existir
+                    data_nascimento = None
+                    if row['data_nascimento']:
+                        try:
+                            data_nascimento = datetime.strptime(row['data_nascimento'], '%Y-%m-%d').date()
+                        except ValueError:
+                            self.stdout.write(self.style.WARNING(f'AVISO: Data de nascimento inválida para {nome}: "{row["data_nascimento"]}". Ignorando data.'))
 
-                    self.stdout.write(self.style.NOTICE(f'Importando ator: {nome}'))
+                    # Obtém a nacionalidade do CSV e a mapeia para o código de duas letras
+                    nacionalidade_do_csv = row.get('nacionalidade', '').strip()
+                    
+                    # Usa o mapeamento para obter o código da nacionalidade
+                    # Se não encontrar no mapeamento, salva como None (ou uma string vazia, dependendo da necessidade)
+                    nacionalidade_para_salvar = self.NACIONALIDADE_MAP.get(nacionalidade_do_csv, None)
+
+                    if not nacionalidade_para_salvar and nacionalidade_do_csv:
+                        self.stdout.write(self.style.WARNING(f'AVISO: Nacionalidade "{nacionalidade_do_csv}" para o ator {nome} não encontrada no mapeamento. Salvando como vazio.'))
+
+                    self.stdout.write(self.style.NOTICE(f'Importando ator: {nome} (Nacionalidade CSV: "{nacionalidade_do_csv}", Salvando como: "{nacionalidade_para_salvar}")'))
 
                     Atores.objects.create(
                         nome=nome,
                         data_nascimento=data_nascimento,
-                        nascionalidade=nascionalidade,
+                        nacionalidade=nacionalidade_para_salvar, # Usa o valor mapeado
                     )
                 self.stdout.write(self.style.SUCCESS('Atores importados com sucesso!'))
         except FileNotFoundError:
             self.stdout.write(self.style.ERROR(f'Arquivo {file_name} não encontrado.'))
         except Exception as e:
             self.stdout.write(self.style.ERROR(f'Ocorreu um erro: {str(e)}'))
+

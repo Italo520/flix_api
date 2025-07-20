@@ -1,7 +1,7 @@
 from django.db import models
 
 
-CONST_NASCIONALIDADE = (
+CONST_NACIONALIDADE = (
     ('BR', 'Brasileiro'),
     ('US', 'Americano'),
     ('FR', 'Francês'),
@@ -19,7 +19,7 @@ CONST_NASCIONALIDADE = (
 class Atores(models.Model):
     nome = models.CharField(max_length=200)
     data_nascimento = models.DateField(null=True, blank=True)
-    nascionalidade = models.CharField(max_length=50, null=True, blank=True, choices=CONST_NASCIONALIDADE)
+    nacionalidade = models.CharField(max_length=50, null=True, blank=True, choices=CONST_NACIONALIDADE)
 
     def __str__(self):
         return self.nome
