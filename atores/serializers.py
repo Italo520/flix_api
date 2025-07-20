@@ -8,7 +8,6 @@ class AtoresSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-
 class AtoresDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Atores

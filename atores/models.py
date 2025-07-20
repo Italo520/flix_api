@@ -1,7 +1,6 @@
 from django.db import models
 
 
-
 CONST_NASCIONALIDADE = (
     ('BR', 'Brasileiro'),
     ('US', 'Americano'),
@@ -16,13 +15,11 @@ CONST_NASCIONALIDADE = (
     ('UK', 'Britânico'),
     ('AU', 'Australiano'),)
 
+
 class Atores(models.Model):
     nome = models.CharField(max_length=200)
     data_nascimento = models.DateField(null=True, blank=True)
     nascionalidade = models.CharField(max_length=50, null=True, blank=True, choices=CONST_NASCIONALIDADE)
-
-
-
 
     def __str__(self):
         return self.nome

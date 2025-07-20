@@ -43,3 +43,5 @@ settings_local.py # Exemplo de arquivo de settings local
 # Ignorar arquivos temporários de editor
 *~
 *.swp
+
+.flake8
