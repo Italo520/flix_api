@@ -1,13 +1,12 @@
 import csv
 from datetime import datetime
 from django.core.management.base import BaseCommand
-from atores.models import Atores, CONST_NACIONALIDADE # Importe CONST_NACIONALIDADE também
+from atores.models import Atores, CONST_NACIONALIDADE
+
 
 class Command(BaseCommand):
     help = 'Importa dados de atores de um arquivo CSV.'
 
-    # Mapeamento do nome completo da nacionalidade para o código de duas letras
-    # Isso é necessário porque o CSV tem o nome completo, mas o modelo espera o código.
     NACIONALIDADE_MAP = {value: key for key, value in CONST_NACIONALIDADE}
 
     def add_arguments(self, parser):
@@ -24,7 +23,7 @@ class Command(BaseCommand):
                 reader = csv.DictReader(file)
                 for row in reader:
                     nome = row['nome']
-                    
+
                     # Converte a data de nascimento, se existir
                     data_nascimento = None
                     if row['data_nascimento']:
@@ -35,7 +34,7 @@ class Command(BaseCommand):
 
                     # Obtém a nacionalidade do CSV e a mapeia para o código de duas letras
                     nacionalidade_do_csv = row.get('nacionalidade', '').strip()
-                    
+
                     # Usa o mapeamento para obter o código da nacionalidade
                     # Se não encontrar no mapeamento, salva como None (ou uma string vazia, dependendo da necessidade)
                     nacionalidade_para_salvar = self.NACIONALIDADE_MAP.get(nacionalidade_do_csv, None)
@@ -48,11 +47,10 @@ class Command(BaseCommand):
                     Atores.objects.create(
                         nome=nome,
                         data_nascimento=data_nascimento,
-                        nacionalidade=nacionalidade_para_salvar, # Usa o valor mapeado
+                        nacionalidade=nacionalidade_para_salvar,
                     )
                 self.stdout.write(self.style.SUCCESS('Atores importados com sucesso!'))
         except FileNotFoundError:
             self.stdout.write(self.style.ERROR(f'Arquivo {file_name} não encontrado.'))
         except Exception as e:
             self.stdout.write(self.style.ERROR(f'Ocorreu um erro: {str(e)}'))
-

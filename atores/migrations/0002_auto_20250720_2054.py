@@ -10,4 +10,4 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RenameField(model_name='atores', old_name='nascionalidade', new_name='nacionalidade', ) , ]
+        migrations.RenameField(model_name='atores', old_name='nascionalidade', new_name='nacionalidade', ), ]
