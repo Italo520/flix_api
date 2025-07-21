@@ -1,4 +1,3 @@
-[English Version (README.md-en)](README.md-en)
 
 # Flix API - Visão Geral
 
