@@ -1,0 +1,288 @@
+[Versão em Português (README.md)](README.md)
+
+# Flix API - Overview
+
+The Flix API is an application programming interface built with Django and Django REST Framework, designed to manage movies, genres, actors, and reviews. It includes JWT authentication to protect its endpoints.
+
+## API Endpoints
+
+The API is organized into modules and follows a RESTful structure. All endpoints are prefixed with `/api/v1/`.
+
+### Authentication
+
+These endpoints are used for JWT token management.
+
+* **`POST /api/v1/autenticacao/token/`**
+    * **Description:** Obtains a pair of tokens (access and refresh).
+    * **Method:** `POST`
+    * **Request Body (JSON):**
+        ```json
+        {
+            "username": "your_username",
+            "password": "your_password"
+        }
+        ```
+    * **Response (JSON):**
+        ```json
+        {
+            "access": "...",
+            "refresh": "..."
+        }
+        ```
+
+* **`POST /api/v1/autenticacao/token/refresh/`**
+    * **Description:** Refreshes an expired access token using a refresh token.
+    * **Method:** `POST`
+    * **Request Body (JSON):**
+        ```json
+        {
+            "refresh": "your_refresh_token"
+        }
+        ```
+    * **Response (JSON):**
+        ```json
+        {
+            "access": "new_access_token"
+        }
+        ```
+
+* **`POST /api/v1/autenticacao/token/verify/`**
+    * **Description:** Verifies the validity of an access token.
+    * **Method:** `POST`
+    * **Request Body (JSON):**
+        ```json
+        {
+            "token": "your_access_token"
+        }
+        ```
+    * **Response:** 200 OK status if valid, or 401/403 error if invalid.
+
+### Genres
+
+Management of movie genres.
+
+* **`GET /api/v1/generos/`**
+    * **Description:** Lists all genres.
+    * **Method:** `GET`
+    * **Permissions:** Authenticated, `view_genero`
+* **`POST /api/v1/generos/`**
+    * **Description:** Creates a new genre.
+    * **Method:** `POST`
+    * **Request Body (JSON):**
+        ```json
+        {
+            "nome": "Genre Name"
+        }
+        ```
+    * **Permissions:** Authenticated, `add_genero`
+* **`GET /api/v1/generos/<int:pk>/`**
+    * **Description:** Retrieves the details of a specific genre.
+    * **Method:** `GET`
+    * **Permissions:** Authenticated, `view_genero`
+* **`PUT /api/v1/generos/<int:pk>/`**
+    * **Description:** Updates an existing genre.
+    * **Method:** `PUT`
+    * **Request Body (JSON):**
+        ```json
+        {
+            "nome": "New Genre Name"
+        }
+        ```
+    * **Permissions:** Authenticated, `change_genero`
+* **`PATCH /api/v1/generos/<int:pk>/`**
+    * **Description:** Partially updates an existing genre.
+    * **Method:** `PATCH`
+    * **Request Body (JSON):**
+        ```json
+        {
+            "nome": "Partial Name"
+        }
+        ```
+    * **Permissions:** Authenticated, `change_genero`
+* **`DELETE /api/v1/generos/<int:pk>/`**
+    * **Description:** Deletes a genre.
+    * **Method:** `DELETE`
+    * **Permissions:** Authenticated, `delete_genero`
+
+### Actors
+
+Management of actor information.
+
+* **`GET /api/v1/atores/`**
+    * **Description:** Lists all actors.
+    * **Method:** `GET`
+    * **Permissions:** Authenticated, `view_atores`
+* **`POST /api/v1/atores/`**
+    * **Description:** Creates a new actor.
+    * **Method:** `POST`
+    * **Request Body (JSON):**
+        ```json
+        {
+            "nome": "Actor Name",
+            "data_nascimento": "YYYY-MM-DD",
+            "nacionalidade": "US"
+        }
+        ```
+    * **Permissions:** Authenticated, `add_atores`
+* **`GET /api/v1/atores/<int:pk>/`**
+    * **Description:** Retrieves the details of a specific actor.
+    * **Method:** `GET`
+    * **Permissions:** Authenticated, `view_atores`
+* **`PUT /api/v1/atores/<int:pk>/`**
+    * **Description:** Updates an existing actor.
+    * **Method:** `PUT`
+    * **Request Body (JSON):** Same fields as POST.
+    * **Permissions:** Authenticated, `change_atores`
+* **`PATCH /api/v1/atores/<int:pk>/`**
+    * **Description:** Partially updates an existing actor.
+    * **Method:** `PATCH`
+    * **Request Body (JSON):** Same fields as POST, but only those to be updated.
+    * **Permissions:** Authenticated, `change_atores`
+* **`DELETE /api/v1/atores/<int:pk>/`**
+    * **Description:** Deletes an actor.
+    * **Method:** `DELETE`
+    * **Permissions:** Authenticated, `delete_atores`
+
+### Movies
+
+Management of movies and statistics.
+
+* **`GET /api/v1/filmes/`**
+    * **Description:** Lists all movies.
+    * **Method:** `GET`
+    * **Permissions:** Authenticated, `view_filme`
+* **`POST /api/v1/filmes/`**
+    * **Description:** Creates a new movie.
+    * **Method:** `POST`
+    * **Request Body (JSON):**
+        ```json
+        {
+            "titulo": "Movie Title",
+            "genero": 1, // Genre ID
+            "ano_lancamento": "YYYY-MM-DD",
+            "atores": [1, 2], // Actor IDs
+            "sinopse": "Movie synopsis"
+        }
+        ```
+        * **Validations:**
+            * `ano_lancamento`: Cannot be a future date.
+            * `sinopse`: Cannot exceed 500 characters.
+    * **Permissions:** Authenticated, `add_filme`
+* **`GET /api/v1/filmes/<int:pk>/`**
+    * **Description:** Retrieves the details of a specific movie. Includes the average rating.
+    * **Method:** `GET`
+    * **Permissions:** Authenticated, `view_filme`
+* **`PUT /api/v1/filmes/<int:pk>/`**
+    * **Description:** Updates an existing movie.
+    * **Method:** `PUT`
+    * **Request Body (JSON):** Same fields as POST.
+    * **Permissions:** Authenticated, `change_filme`
+* **`PATCH /api/v1/filmes/<int:pk>/`**
+    * **Description:** Partially updates an existing movie.
+    * **Method:** `PATCH`
+    * **Request Body (JSON)::** Same fields as POST, but only those to be updated.
+    * **Permissions:** Authenticated, `change_filme`
+* **`DELETE /api/v1/filmes/<int:pk>/`**
+    * **Description:** Deletes a movie.
+    * **Method:** `DELETE`
+    * **Permissions:** Authenticated, `delete_filme`
+* **`GET /api/v1/filmes/stats/`**
+    * **Description:** Returns general statistics about movies and reviews.
+    * **Method:** `GET`
+    * **Response (JSON):**
+        ```json
+        {
+            "total_filmes": 0,
+            "filmes_por_genero": [],
+            "total_reviews": 0,
+            "media_avaliacoes": 0.0
+        }
+        ```
+    * **Permissões:** Authenticated, `view_filme`
+
+### Reviews
+
+Management of movie reviews.
+
+* **`GET /api/v1/reviews/`**
+    * **Description:** Lists all reviews.
+    * **Method:** `GET`
+    * **Permissions:** Authenticated, `view_review`
+* **`POST /api/v1/reviews/`**
+    * **Description:** Creates a new review for a movie.
+    * **Method:** `POST`
+    * **Request Body (JSON):**
+        ```json
+        {
+            "filme": 1, // Movie ID
+            "estrelas": 4, // 0 to 5 stars
+            "comentario": "Great movie!"
+        }
+        ```
+        * **Validations:**
+            * `estrelas`: Must be between 0 and 5.
+    * **Permissions:** Authenticated, `add_review`
+* **`GET /api/v1/reviews/<int:pk>/`**
+    * **Description:** Retrieves the details of a specific review.
+    * **Method:** `GET`
+    * **Permissions:** Authenticated, `view_review`
+* **`PUT /api/v1/reviews/<int:pk>/`**
+    * **Description:** Updates an existing review.
+    * **Method:** `PUT`
+    * **Request Body (JSON)::** Same fields as POST.
+    * **Permissions:** Authenticated, `change_review`
+* **`PATCH /api/v1/reviews/<int:pk>/`**
+    * **Description:** Partially updates an existing review.
+    * **Method:** `PATCH`
+    * **Request Body (JSON)::** Same fields as POST, but only those to be updated.
+    * **Permissions:** Authenticated, `change_review`
+* **`DELETE /api/v1/reviews/<int:pk>/`**
+    * **Description:** Deletes a review.
+    * **Method:** `DELETE`
+    * **Permissions:** Authenticated, `delete_review`
+
+## How to Use
+
+1.  **Environment Setup:**
+    * Make sure you have Python and pip installed.
+    * Create and activate a virtual environment:
+        ```bash
+        python -m venv venv
+        source venv/bin/activate  # Linux/macOS
+        # venv\Scripts\activate  # Windows
+        ```
+    * Install dependencies:
+        ```bash
+        pip install -r requirements.txt
+        pip install -r requirements_dev.txt # For development dependencies, like flake8
+        ```
+2.  **Database Configuration:**
+    * The project uses SQLite by default. The `db.sqlite3` file will be created on the first migration.
+    * Apply migrations:
+        ```bash
+        python manage.py migrate
+        ```
+3.  **Create Superuser (Admin):**
+    * Create a superuser to access the admin panel and manage permissions:
+        ```bash
+        python manage.py createsuperuser
+        ```
+4.  **Import Actors (Optional):**
+    * If you have a CSV file with actor data (like `Lista_atores.csv`), you can import them using the custom command:
+        ```bash
+        python manage.py import_atores Lista_atores.csv
+        ```
+        * The CSV should have `nome`, `data_nascimento` (YYYY-MM-DD format), and `nacionalidade` (e.g., "Brasileiro", "Americano") columns.
+5.  **Run Server:**
+    * Start the Django development server:
+        ```bash
+        python manage.py runserver
+        ```
+    * The API will be available at `http://127.0.0.1:8000/`.
+
+6.  **Authentication and API Usage:**
+    * To access protected endpoints, first obtain an access token via the authentication endpoint.
+    * Include the access token in the `Authorization` header of your requests, in the format `Bearer <your_access_token>`. E.g.:
+        ```
+        Authorization: Bearer your_access_token
+        ```
