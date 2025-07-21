@@ -180,7 +180,7 @@ Management of movies and statistics.
 * **`PATCH /api/v1/filmes/<int:pk>/`**
     * **Description:** Partially updates an existing movie.
     * **Method:** `PATCH`
-    * **Request Body (JSON)::** Same fields as POST, but only those to be updated.
+    * **Request Body (JSON):** Same fields as POST, but only those to be updated.
     * **Permissions:** Authenticated, `change_filme`
 * **`DELETE /api/v1/filmes/<int:pk>/`**
     * **Description:** Deletes a movie.
@@ -198,7 +198,7 @@ Management of movies and statistics.
             "media_avaliacoes": 0.0
         }
         ```
-    * **Permissões:** Authenticated, `view_filme`
+    * **Permissions:** Authenticated, `view_filme`
 
 ### Reviews
 
@@ -229,12 +229,12 @@ Management of movie reviews.
 * **`PUT /api/v1/reviews/<int:pk>/`**
     * **Description:** Updates an existing review.
     * **Method:** `PUT`
-    * **Request Body (JSON)::** Same fields as POST.
+    * **Request Body (JSON):** Same fields as POST.
     * **Permissions:** Authenticated, `change_review`
 * **`PATCH /api/v1/reviews/<int:pk>/`**
     * **Description:** Partially updates an existing review.
     * **Method:** `PATCH`
-    * **Request Body (JSON)::** Same fields as POST, but only those to be updated.
+    * **Request Body (JSON):** Same fields as POST, but only those to be updated.
     * **Permissions:** Authenticated, `change_review`
 * **`DELETE /api/v1/reviews/<int:pk>/`**
     * **Description:** Deletes a review.
