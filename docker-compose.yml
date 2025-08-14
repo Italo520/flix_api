@@ -1,0 +1,7 @@
+services:
+
+  flix-api:
+    biuld: .
+    restart: always
+    ports:
+      - "8080:8080"
