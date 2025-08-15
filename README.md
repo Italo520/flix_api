@@ -1,3 +1,5 @@
+Com certeza\! Segue o `README.md` atualizado com a sua dica incluída na seção de autenticação.
+
 # Flix API - Painel Interativo
 
 ## Visão Geral da API
@@ -6,14 +8,14 @@ Este documento fornece uma visão completa dos dados gerenciados pela Flix API. 
 
 ### Estatísticas Gerais
 
-- **Total de Filmes**: 238
-- **Total de Avaliações**: 1.102
-- **Média de Avaliações**: 4.2 ⭐
+  - **Total de Filmes**: 238
+  - **Total de Avaliações**: 1.102
+  - **Média de Avaliações**: 4.2 ⭐
 
 ### Distribuição de Filmes por Gênero
 
 | Gênero | Quantidade de Filmes |
-|--------|---------------------|
+|---|---|
 | Drama | 55 |
 | Ação | 45 |
 | Comédia | 38 |
@@ -23,7 +25,7 @@ Este documento fornece uma visão completa dos dados gerenciados pela Flix API. 
 | Animação | 15 |
 | Documentário | 10 |
 
----
+-----
 
 ## Explorador de Endpoints
 
@@ -33,9 +35,9 @@ Navegue pelos recursos da API de forma detalhada. Cada seção apresenta os mét
 
 A Flix API inclui documentação interativa completa através do Swagger UI, onde você pode testar os endpoints diretamente no navegador:
 
-- **Swagger UI**: `http://127.0.0.1:8000/swagger/`
-- **Redoc**: `http://127.0.0.1:8000/redoc/`
-- **Schema OpenAPI**: `http://127.0.0.1:8000/swagger.json`
+  - **Swagger UI**: `http://localhost:8000/swagger/`
+  - **Redoc**: `http://localhost:8000/redoc/`
+  - **Schema OpenAPI**: `http://localhost:8000/swagger.json`
 
 > **💡 Dica**: Use o Swagger UI para testar os endpoints de forma interativa, sem precisar de ferramentas externas como Postman ou curl.
 
@@ -43,9 +45,13 @@ A Flix API inclui documentação interativa completa através do Swagger UI, ond
 
 Endpoints para obter e gerenciar tokens de autenticação JWT.
 
-#### `POST /autenticacao/token/`
-- **Descrição**: Obtém um par de tokens (acesso e refresh)
-- **Exemplo de corpo**:
+#### `POST /api/v1/autenticacao/token/`
+
+  - **Descrição**: Obtém um par de tokens (acesso e refresh)
+  - **Exemplo de corpo**:
+
+<!-- end list -->
+
 ```json
 {
   "username": "seu_usuario",
@@ -53,18 +59,28 @@ Endpoints para obter e gerenciar tokens de autenticação JWT.
 }
 ```
 
-#### `POST /autenticacao/token/refresh/`
-- **Descrição**: Renova um token de acesso expirado
-- **Exemplo de corpo**:
+> **Importante**: Após copiar o `access token` gerado, no botão **Authorize** no início da página Swagger, vá para o campo **value** e digite `"Bearer "` (com um espaço no final) e cole o seu `access token` em seguida. Feito isso, as rotas já estarão autorizadas.
+
+#### `POST /api/vI/autenticacao/token/refresh/`
+
+  - **Descrição**: Renova um token de acesso expirado
+  - **Exemplo de corpo**:
+
+<!-- end list -->
+
 ```json
 {
   "refresh": "seu_token_de_refresh"
 }
 ```
 
-#### `POST /autenticacao/token/verify/`
-- **Descrição**: Verifica a validade de um token
-- **Exemplo de corpo**:
+#### `POST /api/v1/autenticacao/token/verify/`
+
+  - **Descrição**: Verifica a validade de um token
+  - **Exemplo de corpo**:
+
+<!-- end list -->
+
 ```json
 {
   "token": "seu_token_de_acesso"
@@ -75,43 +91,59 @@ Endpoints para obter e gerenciar tokens de autenticação JWT.
 
 Gerenciamento de gêneros de filmes.
 
-#### `GET /generos/`
-- **Descrição**: Lista todos os gêneros
+#### `GET /api/v1/generos/`
 
-#### `POST /generos/`
-- **Descrição**: Cria um novo gênero
-- **Exemplo de corpo**:
+  - **Descrição**: Lista todos os gêneros
+
+#### `POST /api/v1/generos/`
+
+  - **Descrição**: Cria um novo gênero
+  - **Exemplo de corpo**:
+
+<!-- end list -->
+
 ```json
 {
   "nome": "Aventura"
 }
 ```
 
-#### `GET /generos/<int:pk>/`
-- **Descrição**: Recupera um gênero específico
+#### `GET /api/v1/generos/<int:pk>/`
 
-#### `PUT /generos/<int:pk>/`
-- **Descrição**: Atualiza um gênero
-- **Exemplo de corpo**:
+  - **Descrição**: Recupera um gênero específico
+
+#### `PUT /api/v1/generos/<int:pk>/`
+
+  - **Descrição**: Atualiza um gênero
+  - **Exemplo de corpo**:
+
+<!-- end list -->
+
 ```json
 {
   "nome": "Aventura Fantástica"
 }
 ```
 
-#### `DELETE /generos/<int:pk>/`
-- **Descrição**: Exclui um gênero
+#### `DELETE /api/v1/generos/<int:pk>/`
+
+  - **Descrição**: Exclui um gênero
 
 ### 🧑‍🎤 Atores
 
 Gerenciamento de informações sobre atores.
 
-#### `GET /atores/`
-- **Descrição**: Lista todos os atores
+#### `GET /api/v1/atores/`
 
-#### `POST /atores/`
-- **Descrição**: Adiciona um novo ator
-- **Exemplo de corpo**:
+  - **Descrição**: Lista todos os atores
+
+#### `POST /api/v1/atores/`
+
+  - **Descrição**: Adiciona um novo ator
+  - **Exemplo de corpo**:
+
+<!-- end list -->
+
 ```json
 {
   "nome": "Nome do Ator",
@@ -120,25 +152,33 @@ Gerenciamento de informações sobre atores.
 }
 ```
 
-#### `GET /atores/<int:pk>/`
-- **Descrição**: Recupera um ator específico
+#### `GET /api/v1/atores/<int:pk>/`
 
-#### `PUT /atores/<int:pk>/`
-- **Descrição**: Atualiza os dados de um ator
+  - **Descrição**: Recupera um ator específico
 
-#### `DELETE /atores/<int:pk>/`
-- **Descrição**: Exclui um ator
+#### `PUT /api/v1/atores/<int:pk>/`
+
+  - **Descrição**: Atualiza os dados de um ator
+
+#### `DELETE /api/v1/atores/<int:pk>/`
+
+  - **Descrição**: Exclui um ator
 
 ### 🎬 Filmes
 
 Gerenciamento de filmes e suas relações.
 
-#### `GET /filmes/`
-- **Descrição**: Lista todos os filmes
+#### `GET /api/v1/filmes/`
 
-#### `POST /filmes/`
-- **Descrição**: Cria um novo filme
-- **Exemplo de corpo**:
+  - **Descrição**: Lista todos os filmes
+
+#### `POST /api/v1/filmes/`
+
+  - **Descrição**: Cria um novo filme
+  - **Exemplo de corpo**:
+
+<!-- end list -->
+
 ```json
 {
   "titulo": "Novo Filme",
@@ -149,28 +189,37 @@ Gerenciamento de filmes e suas relações.
 }
 ```
 
-#### `GET /filmes/<int:pk>/`
-- **Descrição**: Recupera um filme específico
+#### `GET /api/v1/filmes/<int:pk>/`
 
-#### `PUT /filmes/<int:pk>/`
-- **Descrição**: Atualiza um filme
+  - **Descrição**: Recupera um filme específico
 
-#### `DELETE /filmes/<int:pk>/`
-- **Descrição**: Exclui um filme
+#### `PUT /api/v1/filmes/<int:pk>/`
 
-#### `GET /filmes/stats/`
-- **Descrição**: Retorna estatísticas sobre os filmes
+  - **Descrição**: Atualiza um filme
+
+#### `DELETE /api/v1/filmes/<int:pk>/`
+
+  - **Descrição**: Exclui um filme
+
+#### `GET /api/v1/filmes/stats/`
+
+  - **Descrição**: Retorna estatísticas sobre os filmes
 
 ### ⭐ Avaliações (Reviews)
 
 Gerenciamento de avaliações de filmes.
 
-#### `GET /reviews/`
-- **Descrição**: Lista todas as avaliações
+#### `GET /api/v1/reviews/`
 
-#### `POST /reviews/`
-- **Descrição**: Cria uma nova avaliação
-- **Exemplo de corpo**:
+  - **Descrição**: Lista todas as avaliações
+
+#### `POST /api/v1/reviews/`
+
+  - **Descrição**: Cria uma nova avaliação
+  - **Exemplo de corpo**:
+
+<!-- end list -->
+
 ```json
 {
   "filme": 1,
@@ -179,74 +228,86 @@ Gerenciamento de avaliações de filmes.
 }
 ```
 
-#### `GET /reviews/<int:pk>/`
-- **Descrição**: Recupera uma avaliação específica
+#### `GET /api/v1/reviews/<int:pk>/`
 
-#### `PUT /reviews/<int:pk>/`
-- **Descrição**: Atualiza uma avaliação
+  - **Descrição**: Recupera uma avaliação específica
 
-#### `DELETE /reviews/<int:pk>/`
-- **Descrição**: Exclui uma avaliação
+#### `PUT /api/v1/reviews/<int:pk>/`
 
----
+  - **Descrição**: Atualiza uma avaliação
 
-## Guia de Configuração
+#### `DELETE /api/v1/reviews/<int:pk>/`
 
-Siga estes passos para configurar e executar o projeto da Flix API em seu ambiente de desenvolvimento local.
+  - **Descrição**: Exclui uma avaliação
 
-### 1. Configurar Ambiente Virtual
+-----
 
-Clone o repositório e crie um ambiente virtual para isolar as dependências.
+## 🐳 Guia de Configuração com Docker
+
+Siga estes passos para configurar e executar o projeto da Flix API usando Docker, simplificando o ambiente de desenvolvimento.
+
+### 1\. Pré-requisitos
+
+  - [Docker](https://docs.docker.com/get-docker/)
+  - [Docker Compose](https://docs.docker.com/compose/install/)
+
+### 2\. Clonar o Repositório
 
 ```bash
 git clone <url_do_repositorio>
 cd flix_api
-python -m venv venv
-source venv/bin/activate  # Linux/macOS
 ```
 
-### 2. Instalar Dependências
+### 3\. Construir e Iniciar os Contêineres
 
-Instale todos os pacotes necessários para produção e desenvolvimento.
+Use o Docker Compose para construir a imagem e iniciar o serviço da API.
 
 ```bash
-pip install -r requirements.txt
-pip install -r requirements_dev.txt
+docker-compose up --build
 ```
 
-### 3. Aplicar Migrações do Banco de Dados
+O serviço estará disponível em `http://localhost:8000`.
 
-Crie a estrutura do banco de dados SQLite executando as migrações do Django.
+### 4\. Aplicar Migrações do Banco de Dados
+
+Em um novo terminal, execute o comando de migração dentro do contêiner para criar a estrutura do banco de dados.
 
 ```bash
-python manage.py migrate
+docker-compose exec flix-api python manage.py migrate
 ```
 
-### 4. Criar Superusuário
+### 5\. Criar Superusuário
 
 Crie um usuário administrador para acessar o painel `/admin/`.
 
 ```bash
-python manage.py createsuperuser
+docker-compose exec flix-api python manage.py createsuperuser
 ```
 
-### 5. Executar o Servidor
+### 6\. Acessar a Aplicação
 
-Inicie o servidor de desenvolvimento. A API estará disponível em `http://127.0.0.1:8000`.
+Após iniciar o serviço, você pode acessar:
 
-```bash
-python manage.py runserver
-```
+  - **API Base**: `http://localhost:8000/api/v1/`
+  - **Admin Panel**: `http://localhost:8000/admin/`
+  - **Swagger UI**: `http://localhost:8000/swagger/`
+  - **Redoc**: `http://localhost:8000/redoc/`
 
-### 6. Acessar a Documentação
+### Comandos Úteis do Docker
 
-Após iniciar o servidor, você pode acessar:
+  - **Parar os contêineres**:
+    ```bash
+    docker-compose down
+    ```
+  - **Verificar os logs em tempo real**:
+    ```bash
+    docker-compose logs -f
+    ```
+  - **Executar um comando dentro do contêiner**:
+    ```bash
+    docker-compose exec flix-api <seu_comando>
+    ```
 
-- **API Base**: `http://127.0.0.1:8000/`
-- **Admin Panel**: `http://127.0.0.1:8000/admin/`
-- **Swagger UI**: `http://127.0.0.1:8000/swagger/`
-- **Redoc**: `http://127.0.0.1:8000/redoc/`
-
----
+-----
 
 © 2025 Flix API. Documentação criada para fins de demonstração.
