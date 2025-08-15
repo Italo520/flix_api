@@ -1,0 +1,36 @@
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Ambiente Virtual
+venv/
+.venv/
+env/
+.env/
+
+# Cache e Bytecode do Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Banco de Dados e Logs
+*.sqlite3
+db.sqlite3
+*.log
+
+# Arquivos de IDE e Sistema
+.vscode/
+.idea/
+.DS_Store
+
+# Requisitos de Desenvolvimento
+requirements_dev.txt
+
+# Arquivos CSV
+*.csv
